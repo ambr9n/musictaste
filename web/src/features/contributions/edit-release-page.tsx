@@ -52,7 +52,7 @@ const EditReleasePage = () => {
     mbid: '',
     title: '',
     titleLatin: '',
-    date: '',
+    date: undefined,
     image: null,
     imageUrl: '',
     tracks: [],
@@ -142,7 +142,7 @@ const EditReleasePage = () => {
           : undefined,
         languagesIds: release.languages.map((l) => l.id),
         type: release.type,
-        date: formatReleaseDateInput(release.date, release.datePrecision),
+        date: formatReleaseDateInput(release.date, release.datePrecision) || undefined,
         tracks:
           tracks && tracks.length !== 0
             ? tracks.map((t) => ({
@@ -190,7 +190,7 @@ const EditReleasePage = () => {
       <Container>
         <form
           onSubmit={handleSubmit((data) => {
-            editRelease({ id: releaseId, data });
+            editRelease({ id: releaseId, data: { ...data, date: data.date || undefined } });
           })}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
@@ -273,7 +273,9 @@ const EditReleasePage = () => {
             <FormInputError error={errors.type} />
             <Input
               placeholder="Date (YYYY / YYYY-MM / YYYY-MM-DD / MM/DD/YYYY / MM-DD-YYYY / MMM DD, YYYY)"
-              {...register('date')}
+              {...register('date', {
+                setValueAs: (v) => (v === '' ? undefined : v),
+              })}
             />
             <FormInputError error={errors.date} />
             <Controller

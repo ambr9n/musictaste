@@ -60,7 +60,7 @@ const AddReleasePage = () => {
     mbid: '',
     title: '',
     titleLatin: '',
-    date: '',
+    date: undefined,
     image: null,
     imageUrl: '',
     tracks: [],
@@ -120,7 +120,7 @@ const AddReleasePage = () => {
 
   const handleCreateRelease = async (data: CreateReleaseFormValues) => {
     try {
-      await createRelease(data);
+      await createRelease({ ...data, date: data.date || undefined });
     } catch (error) {
       setImportMessage('Error creating release');
     }
@@ -207,7 +207,9 @@ const AddReleasePage = () => {
             <FormInputError error={errors.type} />
             <Input
               placeholder="Date (YYYY / YYYY-MM / YYYY-MM-DD / MM/DD/YYYY / MM-DD-YYYY / MMM DD, YYYY)"
-              {...register('date')}
+              {...register('date', {
+                setValueAs: (v) => (v === '' ? undefined : v),
+              })}
             />
             <FormInputError error={errors.date} />
             <Controller

@@ -1,6 +1,9 @@
 import dayjs from 'dayjs';
-import { DatePrecision } from 'shared';
-export function normalizeDate(input: string) {
+import { DatePrecision } from '../../../shared/src/enums';
+
+export function normalizeDate(input: string | undefined | null) {
+  if (!input) return null;
+
   if (/^\d{4}$/.test(input)) {
     return {
       date: dayjs(input).format('YYYY'),
@@ -22,11 +25,12 @@ export function normalizeDate(input: string) {
   }
 }
 
-// doublicate web/src/utils/date-format.ts
-export const formatReleaseDateInput = (
+export function formatReleaseDateInput(
   date: string,
   precision: DatePrecision,
-) => {
+) {
+  if (!date) return undefined;
+
   if (precision === DatePrecision.DAY) {
     return dayjs(date).format('YYYY-MM-DD');
   } else if (precision === DatePrecision.MONTH) {
@@ -34,4 +38,4 @@ export const formatReleaseDateInput = (
   } else {
     return dayjs(date).format('YYYY');
   }
-};
+}
