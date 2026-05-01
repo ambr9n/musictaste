@@ -149,15 +149,28 @@ const AddReleasePage = () => {
               {...register('mbid')}
             />
             <FormInputError error={errors.mbid} />
-            <FlexChild align="flex-end">
-              <Button
-                variant="text"
-                onClick={mbImport}
-                disabled={importLoading}
+
+            <Group justify="apart" align="center">
+              <Link
+                to="https://musicbrainz.org/"
+                target="_blank"
+                rel="noreferrer"
+                style={{ fontSize: '14px', marginLeft: 4 }}
               >
-                Import
-              </Button>
-            </FlexChild>
+                MusicBrainz
+              </Link>
+
+              <FlexChild align="flex-end">
+                <Button
+                  variant="text"
+                  onClick={mbImport}
+                  disabled={importLoading}
+                >
+                  Import
+                </Button>
+              </FlexChild>
+            </Group>
+
             {importMessage?.length > 0 && <Feedback message={importMessage} />}
             <Input placeholder="Title" {...register('title')} />
             <FormInputError error={errors.title} />
