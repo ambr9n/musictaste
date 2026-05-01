@@ -155,7 +155,7 @@ const AddReleasePage = () => {
                 to="https://musicbrainz.org/"
                 target="_blank"
                 rel="noreferrer"
-                style={{ fontSize: '14px', marginLeft: 4 }}
+                style={{ fontSize: '13px', marginLeft: 4 }} //
               >
                 MusicBrainz
               </Link>
